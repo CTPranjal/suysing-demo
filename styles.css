@@ -412,6 +412,19 @@ button { font-family: inherit; cursor: pointer; }
 .sdp-persona .avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--navy); color: var(--white); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; flex-shrink: 0; }
 .sdp-persona strong { display: block; font-size: 13.5px; color: var(--navy); }
 .sdp-persona span { font-size: 11.5px; color: var(--gray-500); }
+.sdp-logged-in {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background: var(--blue-light);
+}
+.sdp-logged-in .avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--royal); color: var(--white); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; flex-shrink: 0; }
+.sdp-logged-in strong { display: block; font-size: 13.5px; color: var(--navy); }
+.sdp-logged-in span { font-size: 11.5px; color: var(--gray-500); }
+.sdp-newaccount { display: block; text-align: center; font-size: 12.5px; font-weight: 700; color: var(--blue); padding: 10px 8px 4px; margin-top: 6px; border-top: 1px solid var(--gray-100); }
 
 .mobile-persona-label { color: rgba(255,255,255,0.6); font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; margin: 18px 4px 8px; }
 .mobile-persona-list { display: flex; flex-direction: column; gap: 8px; }

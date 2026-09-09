@@ -170,11 +170,11 @@ function ssTrackProductViewed(skuId, category) {
   ssTrackEvent('SuySing Product Viewed', { sku_id: skuId, category, view_count_7d: count });
 }
 
-function ssAddToCart(skuId, category, price) {
+function ssAddToCart(skuId, category, price, name) {
   const cart = ssLoadCart();
-  cart.push({ skuId, category, price });
+  cart.push({ skuId, category, price, name });
   ssSaveCart(cart);
-  ssTrackEvent('SuySing Added To Cart', { sku_id: skuId, category, cart_value: ssCartValue(cart) });
+  ssTrackEvent('SuySing Added To Cart', { sku_id: skuId, category, product_name: name, cart_value: ssCartValue(cart) });
   return cart;
 }
 
@@ -263,12 +263,26 @@ function ssTrackOrderPlaced(paymentMethod) {
 
   ssEarnPoints(Math.round(cartValue / 50), 'order');
 
+  // Aggregate cart lines by SKU (repeated Add to Cart clicks on the same
+  // product become one line with a quantity, not N separate lines).
+  const lineItems = [];
+  const lineIndexBySku = new Map();
+  cart.forEach((item) => {
+    if (lineIndexBySku.has(item.skuId)) {
+      lineItems[lineIndexBySku.get(item.skuId)].quantity += 1;
+    } else {
+      lineIndexBySku.set(item.skuId, lineItems.length);
+      lineItems.push({ skuId: item.skuId, category: item.category, name: item.name, price: item.price, quantity: 1 });
+    }
+  });
+
   const orders = ssLoadOrders();
   orders.unshift({
     orderId,
     value: cartValue,
     skuCount: cart.length,
     categories,
+    items: lineItems,
     paymentMethod,
     placedAt: now,
     deliverAt: now + SIMULATED_DELIVERY_MS,
@@ -282,17 +296,16 @@ function ssTrackOrderPlaced(paymentMethod) {
   // carries our own funnel-specific properties (is_first_order, etc.) that
   // Charged doesn't have a slot for.
   // https://developer.clevertap.com/docs/web-user-events#recording-the-transaction-amount
-  const itemCounts = new Map();
-  cart.forEach((item) => {
-    const existing = itemCounts.get(item.skuId);
-    if (existing) existing.Quantity += 1;
-    else itemCounts.set(item.skuId, { Category: item.category, 'SKU ID': item.skuId, Quantity: 1 });
-  });
   ssTrackEvent('Charged', {
     Amount: cartValue,
     'Payment mode': paymentMethod,
     'Charged ID': orderId,
-    Items: Array.from(itemCounts.values()),
+    Items: lineItems.map((li) => ({
+      Category: li.category,
+      'Product Name': li.name,
+      'SKU ID': li.skuId,
+      Quantity: li.quantity,
+    })),
   });
 
   ssSaveCart([]);
@@ -421,12 +434,13 @@ function ssRunRemainingLifecycleEvents() {
    ========================================================================= */
 const PERSONAS = {
   rosa: {
-    identity: 'persona-rosa',
-    name: 'Rosa Santos',
-    email: 'rosa@example.com',
+    identity: 'joyce.reyes@suysing.com',
+    name: 'Joyce Reyes',
+    email: 'joyce.reyes@suysing.com',
+    phone: '+639171234501',
     segment: 'Sari-Sari Starter',
     profile: {
-      'SuySing Store Name': "Aling Rosa's Store",
+      'SuySing Store Name': "Reyes Sari-Sari Store",
       'SuySing Store Format': 'Sari-sari Store',
       'SuySing Activation Status': 'Activated',
       'SuySing Total Orders': 1,
@@ -446,12 +460,13 @@ const PERSONAS = {
     ],
   },
   jun: {
-    identity: 'persona-jun',
-    name: 'Jun Reyes',
-    email: 'jun@example.com',
+    identity: 'katrina.dianito@suysing.com',
+    name: 'Katrina Dianito',
+    email: 'katrina.dianito@suysing.com',
+    phone: '+639182345602',
     segment: 'Growing Grocery',
     profile: {
-      'SuySing Store Name': 'Reyes Mini-Grocery',
+      'SuySing Store Name': 'Dianito Mini-Grocery',
       'SuySing Store Format': 'Mid-size Grocery',
       'SuySing Activation Status': 'Activated',
       'SuySing Total Orders': 6,
@@ -471,12 +486,13 @@ const PERSONAS = {
     ],
   },
   amy: {
-    identity: 'persona-amy',
-    name: 'Amy Cruz',
-    email: 'amy@example.com',
+    identity: 'louise.uy@suysing.com',
+    name: 'Louise Uy',
+    email: 'louise.uy@suysing.com',
+    phone: '+639193456703',
     segment: 'Loyal Multi-Store',
     profile: {
-      'SuySing Store Name': 'Cruz Grocery Group',
+      'SuySing Store Name': 'Uy Grocery Group',
       'SuySing Store Format': 'Mid-size Grocery',
       'SuySing Activation Status': 'Activated',
       'SuySing Total Orders': 14,
@@ -509,7 +525,7 @@ function ssLoginAsPersona(key) {
 
   if (window.clevertap) {
     clevertap.onUserLogin.push({
-      Site: { Identity: persona.identity, Name: persona.name, Email: persona.email },
+      Site: { Identity: persona.identity, Name: persona.name, Email: persona.email, Phone: persona.phone },
     });
   }
 
@@ -520,8 +536,10 @@ function ssLoginAsPersona(key) {
     ...persona.profile,
     'SuySing Persona Segment': persona.segment,
     'SuySing Signup Date': signupDate.toISOString().slice(0, 10),
+    'SuySing Phone': persona.phone,
     signedUp: true,
     identity: persona.identity,
+    displayName: persona.name,
     activePersona: key,
   };
   delete fullProfile.signupDaysAgo;
@@ -646,11 +664,53 @@ function ssSimulateNativeDisplay() {
 /* Header "Sign Up" is a hover/click dropdown of demo personas now — there's
    no standalone signup form page anymore. Works on every page since the
    header is a shared partial. */
+function ssInitials(name) {
+  return (name || '').split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase();
+}
+
+/* Reflects the currently logged-in persona in the header: swaps the "Sign
+   Up" pill for the person's first name, and shows a "logged in as" card
+   + log-out option at the top of the dropdown panel. */
+function updateHeaderIdentity() {
+  const btn = document.getElementById('signUpDropdownBtn');
+  const banner = document.getElementById('loggedInBanner');
+  const logOutLink = document.getElementById('logOutLink');
+  if (!btn) return;
+
+  const profile = ssLoadProfile();
+  const persona = PERSONAS[profile.activePersona];
+
+  if (profile.signedUp && persona) {
+    const firstName = persona.name.split(' ')[0];
+    btn.innerHTML = `<span data-icon="check"></span> ${firstName} <span class="caret">▾</span>`;
+    if (banner) {
+      banner.hidden = false;
+      document.getElementById('loggedInAvatar').textContent = ssInitials(persona.name);
+      document.getElementById('loggedInName').textContent = persona.name;
+      document.getElementById('loggedInSegment').textContent = persona.segment;
+    }
+    if (logOutLink) logOutLink.hidden = false;
+  } else {
+    btn.innerHTML = `<span data-icon="idcard"></span> Sign Up <span class="caret">▾</span>`;
+    if (banner) banner.hidden = true;
+    if (logOutLink) logOutLink.hidden = true;
+  }
+}
+
+function ssLogOut() {
+  ssSaveProfile({});
+  ssSaveCart([]);
+  ssSaveOrders([]);
+  location.reload();
+}
+
 function initSignupDropdown() {
   const wrap = document.getElementById('signupDropdown');
   const btn = document.getElementById('signUpDropdownBtn');
   const panel = document.getElementById('signupDropdownPanel');
   if (!wrap || !btn || !panel) return;
+
+  updateHeaderIdentity();
 
   const selectPersona = (key) => {
     ssLoginAsPersona(key);
@@ -673,6 +733,14 @@ function initSignupDropdown() {
   panel.querySelectorAll('.sdp-persona').forEach((el) => {
     el.addEventListener('click', () => selectPersona(el.getAttribute('data-persona')));
   });
+
+  const logOutLink = document.getElementById('logOutLink');
+  if (logOutLink) {
+    logOutLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      ssLogOut();
+    });
+  }
 
   document.querySelectorAll('.mobile-persona-btn').forEach((el) => {
     el.addEventListener('click', () => selectPersona(el.getAttribute('data-persona')));

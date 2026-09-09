@@ -25,19 +25,24 @@
       <div class="signup-dropdown" id="signupDropdown">
         <button class="btn btn-pill" id="signUpDropdownBtn"><span data-icon="idcard"></span> Sign Up <span class="caret">▾</span></button>
         <div class="signup-dropdown-panel" id="signupDropdownPanel">
-          <p class="sdp-label">Log in as a demo persona</p>
+          <div id="loggedInBanner" class="sdp-logged-in" hidden>
+            <span class="avatar" id="loggedInAvatar"></span>
+            <div><strong id="loggedInName"></strong><span id="loggedInSegment"></span></div>
+          </div>
+          <p class="sdp-label">Switch demo persona</p>
           <div class="sdp-persona" data-persona="rosa">
-            <span class="avatar">RS</span>
-            <div><strong>Rosa</strong><span>Sari-Sari Starter</span></div>
+            <span class="avatar">JR</span>
+            <div><strong>Joyce</strong><span>Sari-Sari Starter</span></div>
           </div>
           <div class="sdp-persona" data-persona="jun">
-            <span class="avatar">JR</span>
-            <div><strong>Jun</strong><span>Growing Grocery</span></div>
+            <span class="avatar">KD</span>
+            <div><strong>Katrina</strong><span>Growing Grocery</span></div>
           </div>
           <div class="sdp-persona" data-persona="amy">
-            <span class="avatar">AC</span>
-            <div><strong>Amy</strong><span>Loyal Multi-Store</span></div>
+            <span class="avatar">LU</span>
+            <div><strong>Louise</strong><span>Loyal Multi-Store</span></div>
           </div>
+          <a href="#" class="sdp-newaccount" id="logOutLink" hidden>Log out</a>
         </div>
       </div>
       <button class="btn btn-pill" onclick="location.href='login.html'"><span data-icon="check"></span> I Already Have an Account</button>
@@ -90,9 +95,9 @@
   <a href="orders.html">My Orders</a>
   <p class="mobile-persona-label">Log in as a demo persona</p>
   <div class="mobile-persona-list">
-    <button class="mobile-persona-btn" data-persona="rosa">Rosa — Sari-Sari Starter</button>
-    <button class="mobile-persona-btn" data-persona="jun">Jun — Growing Grocery</button>
-    <button class="mobile-persona-btn" data-persona="amy">Amy — Loyal Multi-Store</button>
+    <button class="mobile-persona-btn" data-persona="rosa">Joyce — Sari-Sari Starter</button>
+    <button class="mobile-persona-btn" data-persona="jun">Katrina — Growing Grocery</button>
+    <button class="mobile-persona-btn" data-persona="amy">Louise — Loyal Multi-Store</button>
   </div>
   <button class="btn btn-outline btn-block" onclick="location.href='login.html'" style="color:var(--navy);border-color:var(--gray-300);margin-top:14px;">I Already Have an Account</button>
 </div>
