@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Suy Sing | Bringing Success to Grocers</title>
+<link rel="icon" href="https://suysing.com/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=5" />
+<!-- CleverTap -->
+<script type="text/javascript">
+var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[]};
+clevertap.account.push({"id": "489-7K5-676Z"});
+clevertap.privacy.push({optOut: false});
+clevertap.privacy.push({useIP: false});
+(function () {
+    var wzrk = document.createElement('script');
+    wzrk.type = 'text/javascript';
+    wzrk.async = true;
+    wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/clevertap.min.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wzrk, s);
+})();
+</script>
+</head>
+<body data-page="home">
+
+<div data-include="partials/agegate.html?v=5"></div>
+<div data-include="partials/header.html?v=5"></div>
+
+<!-- Promo carousel -->
+<section class="promo-carousel" id="promoCarousel">
+  <button class="carousel-arrow left" aria-label="Previous slide"><span data-icon="chevronL"></span></button>
+  <button class="carousel-arrow right" aria-label="Next slide"><span data-icon="chevronR"></span></button>
+
+  <div class="promo-track">
+
+    <div class="promo-slide active" data-nd-topic="Hero Slide 1">
+      <img class="ad-banner-img" src="images/4.jpg" alt="Personalized offer 1" onclick="ndSlideClick(0)" />
+    </div>
+
+    <div class="promo-slide" data-nd-topic="Hero Slide 2">
+      <img class="ad-banner-img" src="images/2.jpeg" alt="Personalized offer 2" onclick="ndSlideClick(1)" />
+    </div>
+
+    <div class="promo-slide" data-nd-topic="Hero Slide 3">
+      <img class="ad-banner-img" src="https://placehold.co/1600x460/0f7a63/ffffff?text=Slide+3" alt="Personalized offer 3" onclick="ndSlideClick(2)" />
+    </div>
+
+  </div>
+
+  <div class="carousel-dots">
+    <span class="active" data-i="0"></span>
+    <span data-i="1"></span>
+    <span data-i="2"></span>
+  </div>
+</section>
+
+<!-- Hero -->
+<section class="hero">
+  <svg class="hero-art" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="40" y="40" width="300" height="230" rx="16" fill="#123a63" opacity="0.55"/>
+    <rect x="66" y="70" width="60" height="70" rx="6" fill="#f7941d"/>
+    <rect x="140" y="70" width="60" height="70" rx="6" fill="#1565c0"/>
+    <rect x="214" y="70" width="60" height="70" rx="6" fill="#ffffff" opacity="0.85"/>
+    <rect x="66" y="156" width="60" height="70" rx="6" fill="#ffffff" opacity="0.85"/>
+    <rect x="140" y="156" width="60" height="70" rx="6" fill="#f7941d" opacity="0.9"/>
+    <rect x="214" y="156" width="60" height="70" rx="6" fill="#1565c0" opacity="0.9"/>
+    <rect x="20" y="300" width="230" height="66" rx="10" fill="#0d2b4e"/>
+    <rect x="250" y="316" width="70" height="50" rx="8" fill="#f7941d"/>
+    <rect x="255" y="322" width="34" height="22" rx="3" fill="#0d2b4e" opacity="0.35"/>
+    <circle cx="80" cy="372" r="16" fill="#08192f"/>
+    <circle cx="80" cy="372" r="7" fill="#c4d1e2"/>
+    <circle cx="200" cy="372" r="16" fill="#08192f"/>
+    <circle cx="200" cy="372" r="7" fill="#c4d1e2"/>
+    <circle cx="300" cy="372" r="16" fill="#08192f"/>
+    <circle cx="300" cy="372" r="7" fill="#c4d1e2"/>
+  </svg>
+  <div class="container hero-inner">
+    <div>
+      <span class="hero-eyebrow"><span class="hero-eyebrow-icon" data-icon="delivery"></span> Now delivering to 12 regions nationwide</span>
+      <h1>Your <span>one-stop</span> wholesale partner for sari-sari and grocery stores</h1>
+      <p>Stock your shelves with trusted brands at wholesale prices. Suy Sing connects independent grocers to a nationwide supply network — order online, get it delivered, grow your store.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" onclick="openHeaderPersonaMenu()">Create Free Account</button>
+        <button class="btn btn-outline" onclick="location.href='services.html'">See How It Works</button>
+      </div>
+      <div class="hero-stats">
+        <div><strong>8,500+</strong><span>Partner stores</span></div>
+        <div><strong>3,200+</strong><span>Products listed</span></div>
+        <div><strong>40+</strong><span>Branches nationwide</span></div>
+      </div>
+    </div>
+    <div class="order-card">
+      <h3>Browse &amp; order in minutes</h3>
+      <p class="small">Sign up or log in to see wholesale pricing near you.</p>
+      <div class="order-search">
+        <input type="text" placeholder="Search rice, oil, canned goods…" />
+        <button class="btn btn-primary" data-demo="Search is disabled in this demo.">Search</button>
+      </div>
+      <div class="chip-row">
+        <span class="chip">Canned Goods</span>
+        <span class="chip">Beverages</span>
+        <span class="chip">Snacks</span>
+        <span class="chip">Personal Care</span>
+      </div>
+      <div class="fine">🔒 Wholesale prices are only visible to registered store owners.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Partner strip -->
+<div class="strip">
+  <div class="container strip-inner">
+    <span class="strip-label"><img class="ic" style="width:16px;height:16px;" src="https://suysing.com/images/icon-partner-brand.webp" alt="" /> Trusted brands on our shelves</span>
+    <div class="logo-row">
+      <div class="logo-pill">MERIENDA CO.</div>
+      <div class="logo-pill">GOLDEN HARVEST</div>
+      <div class="logo-pill">TUBIG PURO</div>
+      <div class="logo-pill">LUTO BAHAY</div>
+      <div class="logo-pill">SAGANA FOODS</div>
+    </div>
+  </div>
+</div>
+
+<!-- Categories -->
+<section class="section" id="categories">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">Top Categories</span>
+      <h2 class="section-title">Everything your store needs, in one order</h2>
+      <p class="section-sub">Shop thousands of fast-moving products across every category, all at wholesale prices.</p>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card"><div class="cat-icon" data-icon="can"></div><h4>Canned Goods</h4><span>210 items</span></div>
+      <div class="cat-card"><div class="cat-icon" data-icon="beverage"></div><h4>Beverages</h4><span>340 items</span></div>
+      <div class="cat-card"><div class="cat-icon" data-icon="snack"></div><h4>Snacks &amp; Sweets</h4><span>480 items</span></div>
+      <div class="cat-card"><div class="cat-icon" data-icon="household"></div><h4>Household Care</h4><span>190 items</span></div>
+      <div class="cat-card"><div class="cat-icon" data-icon="personal"></div><h4>Personal Care</h4><span>260 items</span></div>
+      <div class="cat-card"><div class="cat-icon" data-icon="rice"></div><h4>Rice &amp; Staples</h4><span>95 items</span></div>
+      <div class="cat-card"><div class="cat-icon" data-icon="dairy"></div><h4>Frozen &amp; Dairy</h4><span>150 items</span></div>
+      <div class="cat-card"><div class="cat-icon" data-icon="pack"></div><h4>Tobacco</h4><span>Age-restricted</span></div>
+      <div class="cat-card"><div class="cat-icon" data-icon="bottle"></div><h4>Alcohol</h4><span>Age-restricted</span></div>
+      <div class="cat-card"><div class="cat-icon" data-icon="tissue"></div><h4>Paper &amp; Tissue</h4><span>70 items</span></div>
+      <div class="cat-card"><div class="cat-icon" data-icon="noodles"></div><h4>Instant Meals</h4><span>120 items</span></div>
+      <div class="cat-card"><div class="cat-icon" data-icon="supplies"></div><h4>Store Supplies</h4><span>60 items</span></div>
+    </div>
+    <div class="view-all-row">
+      <button class="btn btn-navy" onclick="location.href='products.html'">View All Products →</button>
+    </div>
+  </div>
+</section>
+
+<!-- How to order -->
+<section class="section alt">
+  <div class="container">
+    <div class="section-head center">
+      <span class="section-tag">How To Order</span>
+      <h2 class="section-title">Ordering wholesale has never been this easy</h2>
+      <p class="section-sub">Three simple steps and your next delivery is on its way.</p>
+    </div>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-num" data-icon="idcard" style="padding:9px;"></div>
+        <h4>Create your account</h4>
+        <p>Sign up with your store details and get verified in as little as one business day.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num" data-icon="cart" style="padding:9px;"></div>
+        <h4>Browse &amp; add to cart</h4>
+        <p>Explore wholesale catalogs, weekly promos, and bundle deals tailored to your store.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num" data-icon="delivery" style="padding:9px;"></div>
+        <h4>Checkout &amp; get delivered</h4>
+        <p>Pay online or on delivery, then track your order until it reaches your doorstep.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Programs -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">Customer Programs</span>
+      <h2 class="section-title">Grow your store beyond the shelf</h2>
+      <p class="section-sub">Programs designed to help independent grocers run smarter, more profitable stores.</p>
+    </div>
+    <div class="programs-grid">
+      <div class="program-card a">
+        <span class="pill" style="display:inline-flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;display:inline-flex;" data-icon="idcard"></span> Retail Academy</span>
+        <h4>Free training for store owners</h4>
+        <p>Short courses on merchandising, inventory, and store finances — built for sari-sari and mini-mart owners.</p>
+        <button class="btn btn-outline" onclick="location.href='retail-academy.html'">Explore courses</button>
+      </div>
+      <div class="program-card b">
+        <span class="pill" style="display:inline-flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;display:inline-flex;" data-icon="star"></span> Loyalty Rewards</span>
+        <h4>Earn points on every order</h4>
+        <p>Redeem points for discounts, free delivery, and exclusive access to new product launches.</p>
+        <button class="btn btn-navy" id="seeRewardsBtn">See rewards</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section alt">
+  <div class="container">
+    <div class="section-head center">
+      <span class="section-tag"><img class="ic" style="width:14px;height:14px;" src="https://suysing.com/images/icon-testi.webp" alt=""/> Customer Stories</span>
+      <h2 class="section-title">Loved by grocers nationwide</h2>
+      <p class="section-sub">Here's what store owners say about ordering with Suy Sing.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p>"Ordering used to take a whole afternoon at the market. Now I place my order at night and it's delivered before I open the store."</p>
+        <div class="testi-person">
+          <div class="avatar">RC</div>
+          <div><strong>Rosa C.</strong><span>Sari-sari store owner, Quezon City</span></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p>"The Retail Academy course on inventory changed how I restock. Less spoilage, better margins every month."</p>
+        <div class="testi-person">
+          <div class="avatar">JM</div>
+          <div><strong>Jun M.</strong><span>Mini-mart owner, Cebu</span></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p>"Prices are consistently lower than the public market, and the weekly promos help me plan what to feature up front."</p>
+        <div class="testi-person">
+          <div class="avatar">AL</div>
+          <div><strong>Amy L.</strong><span>Grocery owner, Davao</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Join Us -->
+<section class="section">
+  <div class="container">
+    <div class="join-wrap">
+      <div>
+        <span class="section-tag"><img class="ic" style="width:14px;height:14px;" src="https://suysing.com/images/icon-join.webp" alt=""/> Join Us</span>
+        <h2 class="section-title">Ready to stock smarter?</h2>
+        <p class="section-sub">Create your free store account today and get access to wholesale pricing, weekly promos, and same-week delivery.</p>
+        <ul class="join-benefits">
+          <li>Wholesale prices on 3,200+ products</li>
+          <li>Free training through Retail Academy</li>
+          <li>Delivery to 40+ branches nationwide</li>
+          <li>Dedicated support for store owners</li>
+        </ul>
+      </div>
+      <form class="join-form" data-demo-form="Account request submitted! We'll text you a verification code shortly.">
+        <div class="form-row">
+          <div class="form-field">
+            <label>First name</label>
+            <input type="text" placeholder="Juan" required />
+          </div>
+          <div class="form-field">
+            <label>Last name</label>
+            <input type="text" placeholder="Dela Cruz" required />
+          </div>
+        </div>
+        <div class="form-row single">
+          <div class="form-field">
+            <label>Store name</label>
+            <input type="text" placeholder="Aling Rosa Store" required />
+          </div>
+        </div>
+        <div class="form-row single">
+          <div class="form-field">
+            <label>Mobile number</label>
+            <input type="tel" placeholder="09XX XXX XXXX" required />
+          </div>
+        </div>
+        <div class="form-row single">
+          <div class="form-field">
+            <label>Nearest branch</label>
+            <select>
+              <option>Manila</option>
+              <option>Quezon City</option>
+              <option>Cebu</option>
+              <option>Davao</option>
+              <option>Iloilo</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Create Free Account</button>
+        <p class="join-fine">By signing up you agree to our Terms &amp; Conditions and Privacy Policy.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Branches -->
+<section class="section alt">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag"><img class="ic" style="width:14px;height:14px;" src="https://suysing.com/images/icon-loc.webp" alt=""/> Our Branches</span>
+      <h2 class="section-title">Nationwide reach, local delivery</h2>
+      <p class="section-sub">With branches across the Philippines, your next order isn't far away.</p>
+    </div>
+    <div class="branches-wrap">
+      <div class="branch-list">
+        <div class="branch-item active">
+          <div><strong>Metro Manila</strong><span>Binondo · Quezon City · Pasig</span></div>
+          <span class="branch-count">12 branches</span>
+        </div>
+        <div class="branch-item">
+          <div><strong>Central Luzon</strong><span>Pampanga · Bulacan · Tarlac</span></div>
+          <span class="branch-count">8 branches</span>
+        </div>
+        <div class="branch-item">
+          <div><strong>Calabarzon</strong><span>Cavite · Laguna · Batangas</span></div>
+          <span class="branch-count">7 branches</span>
+        </div>
+        <div class="branch-item">
+          <div><strong>Visayas</strong><span>Cebu · Iloilo · Bacolod</span></div>
+          <span class="branch-count">6 branches</span>
+        </div>
+        <div class="branch-item">
+          <div><strong>Mindanao</strong><span>Davao · Cagayan de Oro</span></div>
+          <span class="branch-count">5 branches</span>
+        </div>
+      </div>
+      <div class="map-box">
+        <img src="https://suysing.com/images/philippines.svg?w=256&amp;q=100" alt="Philippines map" style="max-width:220px;margin:0 auto 18px;" />
+        <h4>40+ branches across the Philippines</h4>
+        <p>Select a region on the left to see branch locations near your store.</p>
+        <button class="btn btn-ghost" style="margin-top:16px;" onclick="location.href='branches.html'">View all branches</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Loyalty redeem modal -->
+<div class="modal-overlay" id="loyaltyModal" hidden>
+  <div class="modal-card">
+    <div class="cat-icon" style="background:#fdeecb;color:var(--orange-dark);display:flex;align-items:center;justify-content:center;"><span data-icon="star" style="width:22px;height:22px;"></span></div>
+    <h3>Suki Points</h3>
+    <p style="margin-bottom:8px;">Your current balance:</p>
+    <p style="font-size:28px;font-weight:800;color:var(--navy);margin:0 0 20px;" id="loyaltyBalance">0 pts</p>
+    <div class="modal-actions">
+      <button class="btn btn-navy btn-block" id="loyaltyCloseBtn">Close</button>
+      <button class="btn btn-primary btn-block" id="loyaltyRedeemBtn">Redeem 500 pts</button>
+    </div>
+  </div>
+</div>
+
+<div data-include="partials/footer.html?v=5"></div>
+<script src="script.js?v=5"></script>
+<script src="analytics.js?v=5"></script>
+<script>
+const loyaltyModal = document.getElementById('loyaltyModal');
+document.getElementById('seeRewardsBtn').addEventListener('click', () => {
+  const profile = ssLoadProfile();
+  const balance = profile['SuySing Suki Points Balance'] || 0;
+  document.getElementById('loyaltyBalance').textContent = balance.toLocaleString() + ' pts';
+  const redeemBtn = document.getElementById('loyaltyRedeemBtn');
+  redeemBtn.disabled = balance < 500;
+  redeemBtn.textContent = balance < 500 ? 'Need 500 pts to redeem' : 'Redeem 500 pts for ₱50 off';
+  loyaltyModal.hidden = false;
+});
+document.getElementById('loyaltyCloseBtn').addEventListener('click', () => { loyaltyModal.hidden = true; });
+document.getElementById('loyaltyRedeemBtn').addEventListener('click', () => {
+  const newBalance = ssRedeemPoints(500, '₱50 delivery discount');
+  document.getElementById('loyaltyBalance').textContent = newBalance.toLocaleString() + ' pts';
+  showToast('Redeemed 500 points for ₱50 off — logged to CleverTap.');
+  loyaltyModal.hidden = true;
+});
+
+// Demo stand-in for a CleverTap Web Native Display campaign firing for the
+// active persona's segment — see the real CT_web_native_display listener
+// and renderNotificationViewed/Clicked calls in analytics.js.
+// document.addEventListener('partials:loaded', () => {
+//   ssSimulateNativeDisplay();
+// });
+</script>
+</body>
+</html>

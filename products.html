@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Products | Suy Sing</title>
+<link rel="icon" href="https://suysing.com/favicon.svg" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=5" />
+<!-- CleverTap -->
+<script type="text/javascript">
+var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[]};
+clevertap.account.push({"id": "489-7K5-676Z"});
+clevertap.privacy.push({optOut: false});
+clevertap.privacy.push({useIP: false});
+(function () {
+    var wzrk = document.createElement('script');
+    wzrk.type = 'text/javascript';
+    wzrk.async = true;
+    wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/clevertap.min.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wzrk, s);
+})();
+</script>
+</head>
+<body data-page="products">
+
+<div data-include="partials/agegate.html?v=5"></div>
+<div data-include="partials/header.html?v=5"></div>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / Products</div>
+    <h1>Wholesale products for every aisle</h1>
+    <p>Browse 3,200+ SKUs across canned goods, beverages, snacks, personal care, and more — all at wholesale pricing for registered stores.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="product-layout">
+      <aside class="filter-box">
+        <h5>Categories</h5>
+        <div class="filter-cat active"><span data-icon="can"></span> Canned Goods <span class="count">210</span></div>
+        <div class="filter-cat"><span data-icon="beverage"></span> Beverages <span class="count">340</span></div>
+        <div class="filter-cat"><span data-icon="personal"></span> Personal Care <span class="count">260</span></div>
+        <div class="filter-cat"><span data-icon="household"></span> Household Care <span class="count">190</span></div>
+        <div class="filter-cat"><span data-icon="noodles"></span> Instant Meals <span class="count">120</span></div>
+        <h5 style="margin-top:26px;">Brand</h5>
+        <div class="filter-cat">Merienda Co. <span class="count">64</span></div>
+        <div class="filter-cat">Golden Harvest <span class="count">51</span></div>
+        <div class="filter-cat">Tubig Puro <span class="count">33</span></div>
+        <div class="filter-cat">Sagana Foods <span class="count">28</span></div>
+        <h5 style="margin-top:26px;">Price</h5>
+        <div class="filter-cat">Under ₱200 <span class="count">412</span></div>
+        <div class="filter-cat">₱200 – ₱500 <span class="count">288</span></div>
+        <div class="filter-cat">Over ₱500 <span class="count">96</span></div>
+      </aside>
+
+      <div>
+        <div class="product-toolbar">
+          <span class="result-count">Showing 1–12 of 3,214 products</span>
+          <select class="filter-select" style="padding:9px 12px;border:1px solid var(--gray-300);border-radius:8px;font-size:13.5px;">
+            <option>Best selling</option>
+            <option>Price: low to high</option>
+            <option>Price: high to low</option>
+            <option>Newest</option>
+          </select>
+        </div>
+        <div class="product-grid" id="productGrid"></div>
+        <div class="pagination">
+          <button>‹</button>
+          <button class="active">1</button>
+          <button>2</button>
+          <button>3</button>
+          <button>…</button>
+          <button>268</button>
+          <button>›</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div data-include="partials/footer.html?v=5"></div>
+
+<!-- Mini cart bar -->
+<div class="mini-cart-bar" id="miniCartBar" hidden>
+  <span class="mc-info"><span id="mcCount">0</span> items · <span id="mcTotal">₱0</span></span>
+  <button class="btn btn-primary" id="mcCheckoutBtn">View Cart</button>
+</div>
+
+<script src="script.js?v=5"></script>
+<script src="analytics.js?v=5"></script>
+<script>
+const PRODUCTS = [
+  { sku: "SS-CAN-001", category: "Canned Goods", icon: "can", color: "thumb-red", brand: "Sagana Foods", name: "Corned Beef 150g (24-pack case)", priceValue: 1180, price: "₱1,180", old: "₱1,320", badge: "Best Seller" },
+  { sku: "SS-BEV-001", category: "Beverages", icon: "beverage", color: "thumb-blue", brand: "Tubig Puro", name: "Purified Water 500mL (24-pack case)", priceValue: 96, price: "₱96", old: null, badge: null },
+  { sku: "SS-SNK-001", category: "Snacks & Sweets", icon: "snack", color: "thumb-purple", brand: "Merienda Co.", name: "Assorted Wafer Sticks 24x30g", priceValue: 312, price: "₱312", old: "₱350", badge: "Promo" },
+  { sku: "SS-HHC-001", category: "Household Care", icon: "household", color: "thumb-green", brand: "Golden Harvest", name: "Dishwashing Liquid 1L (12-pack case)", priceValue: 864, price: "₱864", old: null, badge: null },
+  { sku: "SS-PER-001", category: "Personal Care", icon: "personal", color: "thumb-teal", brand: "Golden Harvest", name: "Shampoo Sachet 12mL (100-pack)", priceValue: 480, price: "₱480", old: null, badge: null },
+  { sku: "SS-RIC-001", category: "Rice & Staples", icon: "rice", color: "thumb-amber", brand: "Sagana Foods", name: "Well-Milled Rice 25kg sack", priceValue: 1450, price: "₱1,450", old: "₱1,520", badge: "Promo" },
+  { sku: "SS-DRY-001", category: "Frozen & Dairy", icon: "dairy", color: "thumb-blue", brand: "Tubig Puro", name: "Powdered Juice Drink 24x25g", priceValue: 168, price: "₱168", old: null, badge: null },
+  { sku: "SS-PAP-001", category: "Paper & Tissue", icon: "tissue", color: "thumb-gray", brand: "Merienda Co.", name: "Tissue Roll 2-ply 12-pack", priceValue: 228, price: "₱228", old: null, badge: null },
+  { sku: "SS-NDL-001", category: "Instant Meals", icon: "noodles", color: "thumb-amber", brand: "Sagana Foods", name: "Instant Noodles 24x55g", priceValue: 204, price: "₱204", old: null, badge: "Best Seller" },
+  { sku: "SS-SUP-001", category: "Store Supplies", icon: "supplies", color: "thumb-green", brand: "Golden Harvest", name: "Reusable Shopping Bags (20-pack)", priceValue: 340, price: "₱340", old: null, badge: null },
+  { sku: "SS-CAN-002", category: "Canned Goods", icon: "can", color: "thumb-red", brand: "Sagana Foods", name: "Sardines in Tomato Sauce 24x155g", priceValue: 552, price: "₱552", old: "₱600", badge: "Promo" },
+  { sku: "SS-BEV-002", category: "Beverages", icon: "beverage", color: "thumb-blue", brand: "Tubig Puro", name: "Sparkling Water 330mL 24-pack", priceValue: 312, price: "₱312", old: null, badge: null },
+];
+
+const grid = document.getElementById('productGrid');
+grid.innerHTML = PRODUCTS.map((p, i) => `
+  <div class="product-card">
+    <div class="product-thumb ${p.color}" style="cursor:pointer;" onclick="viewProduct(${i})">${p.badge ? `<span class="badge">${p.badge}</span>` : ''}<span data-icon="${p.icon}"></span></div>
+    <div class="product-body">
+      <div class="brand">${p.brand}</div>
+      <h4 style="cursor:pointer;" onclick="viewProduct(${i})">${p.name}</h4>
+      <div class="product-price"><strong>${p.price}</strong>${p.old ? `<span>${p.old}</span>` : ''}<span style="text-decoration:none;">/ case</span></div>
+      <button class="btn btn-primary" onclick="addProductToCart(${i})">Add to Cart</button>
+    </div>
+  </div>
+`).join('');
+initIcons();
+
+function peso(n) { return '₱' + n.toLocaleString(); }
+
+function viewProduct(i) {
+  const p = PRODUCTS[i];
+  ssTrackProductViewed(p.sku, p.category);
+}
+
+function addProductToCart(i) {
+  const p = PRODUCTS[i];
+  ssAddToCart(p.sku, p.category, p.priceValue);
+  showToast(p.name + ' added to cart.');
+  renderMiniCart();
+  ssRefreshCartBadge();
+}
+
+function renderMiniCart() {
+  const cart = ssLoadCart();
+  const bar = document.getElementById('miniCartBar');
+  if (!cart.length) { bar.hidden = true; return; }
+  bar.hidden = false;
+  document.getElementById('mcCount').textContent = cart.length;
+  document.getElementById('mcTotal').textContent = peso(ssCartValue(cart));
+}
+renderMiniCart();
+
+document.getElementById('mcCheckoutBtn').addEventListener('click', () => {
+  location.href = 'cart.html';
+});
+</script>
+</body>
+</html>

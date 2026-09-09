@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Retail Academy | Suy Sing</title>
+<link rel="icon" href="https://suysing.com/favicon.svg" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=5" />
+<!-- CleverTap -->
+<script type="text/javascript">
+var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[]};
+clevertap.account.push({"id": "489-7K5-676Z"});
+clevertap.privacy.push({optOut: false});
+clevertap.privacy.push({useIP: false});
+(function () {
+    var wzrk = document.createElement('script');
+    wzrk.type = 'text/javascript';
+    wzrk.async = true;
+    wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/clevertap.min.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wzrk, s);
+})();
+</script>
+</head>
+<body data-page="retail-academy">
+
+<div data-include="partials/agegate.html?v=5"></div>
+<div data-include="partials/header.html?v=5"></div>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / Retail Academy</div>
+    <h1>Retail Academy</h1>
+    <p>Free training built for sari-sari and mini-mart owners — learn the skills that keep a small store profitable.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="academy-hero">
+      <span class="badge-icon" data-icon="idcard"></span>
+      <div class="overlay">
+        <div class="overlay-content">
+          <h2>Learn the business behind the store</h2>
+          <p>Short, practical courses on merchandising, inventory, and store finances — designed for owners who are busy running the shop.</p>
+          <button class="btn btn-primary" data-demo="Enrollment is disabled in this demo.">Enroll for Free</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head center">
+      <span class="section-tag">Courses</span>
+      <h2 class="section-title">Pick a course to get started</h2>
+      <p class="section-sub">All courses are free for registered Suy Sing stores and can be completed at your own pace.</p>
+    </div>
+
+    <div class="course-grid">
+      <div class="course-card" style="cursor:pointer;" onclick="ssTrackRetailAcademyAttended('Store Inventory Basics'); showToast('Marked as attended — logged to CleverTap.');">
+        <div class="cover thumb-blue"><span class="course-cover-icon" data-icon="supplies"></span></div>
+        <div class="body">
+          <span class="level">Beginner</span>
+          <h4>Store Inventory Basics</h4>
+          <p>Learn how to track stock, spot slow-moving items, and avoid running out of best sellers.</p>
+          <div class="course-meta"><span>4 lessons</span><span>45 min</span></div>
+        </div>
+      </div>
+      <div class="course-card" style="cursor:pointer;" onclick="ssTrackRetailAcademyAttended('Simple Store Bookkeeping'); showToast('Marked as attended — logged to CleverTap.');">
+        <div class="cover thumb-amber"><span class="course-cover-icon" data-icon="doc"></span></div>
+        <div class="body">
+          <span class="level">Beginner</span>
+          <h4>Simple Store Bookkeeping</h4>
+          <p>Set up a basic daily sales log and understand your real profit margin per item.</p>
+          <div class="course-meta"><span>5 lessons</span><span>1 hr</span></div>
+        </div>
+      </div>
+      <div class="course-card" style="cursor:pointer;" onclick="ssTrackRetailAcademyAttended('Shelf &amp; Display Merchandising'); showToast('Marked as attended — logged to CleverTap.');">
+        <div class="cover thumb-teal"><span class="course-cover-icon" data-icon="building"></span></div>
+        <div class="body">
+          <span class="level">Intermediate</span>
+          <h4>Shelf &amp; Display Merchandising</h4>
+          <p>Arrange your shelves to highlight best sellers and increase basket size per visit.</p>
+          <div class="course-meta"><span>3 lessons</span><span>35 min</span></div>
+        </div>
+      </div>
+      <div class="course-card" style="cursor:pointer;" onclick="ssTrackRetailAcademyAttended('Ordering the Right Quantity'); showToast('Marked as attended — logged to CleverTap.');">
+        <div class="cover thumb-purple"><span class="course-cover-icon" data-icon="cart"></span></div>
+        <div class="body">
+          <span class="level">Intermediate</span>
+          <h4>Ordering the Right Quantity</h4>
+          <p>Match your order sizes to actual demand and avoid tying up cash in dead stock.</p>
+          <div class="course-meta"><span>4 lessons</span><span>50 min</span></div>
+        </div>
+      </div>
+      <div class="course-card" style="cursor:pointer;" onclick="ssTrackRetailAcademyAttended('Managing Utang &amp; Store Credit'); showToast('Marked as attended — logged to CleverTap.');">
+        <div class="cover thumb-green"><span class="course-cover-icon" data-icon="idcard"></span></div>
+        <div class="body">
+          <span class="level">Intermediate</span>
+          <h4>Managing Utang &amp; Store Credit</h4>
+          <p>Set fair, sustainable credit rules for regular customers without hurting your cash flow.</p>
+          <div class="course-meta"><span>3 lessons</span><span>30 min</span></div>
+        </div>
+      </div>
+      <div class="course-card" style="cursor:pointer;" onclick="ssTrackRetailAcademyAttended('Growing From One Store to Two'); showToast('Marked as attended — logged to CleverTap.');">
+        <div class="cover thumb-red"><span class="course-cover-icon" data-icon="target"></span></div>
+        <div class="body">
+          <span class="level">Advanced</span>
+          <h4>Growing From One Store to Two</h4>
+          <p>What to plan for financially and operationally before opening a second branch.</p>
+          <div class="course-meta"><span>6 lessons</span><span>1.5 hr</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div data-include="partials/footer.html?v=5"></div>
+<script src="script.js?v=5"></script>
+<script src="analytics.js?v=5"></script>
+</body>
+</html>

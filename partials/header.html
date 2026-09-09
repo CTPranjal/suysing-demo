@@ -1,0 +1,98 @@
+<div class="announce-bar" id="announceBar">
+  <div class="container announce-inner">
+    <span><strong>FREE DELIVERY</strong> with ₱12,000 minimum spend. <a href="faqs.html">Terms apply.</a></span>
+    <button class="announce-close" id="announceClose" aria-label="Dismiss">✕</button>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container header-row">
+    <a href="index.html" class="brand">
+      <img src="suysinglogo.png" alt="Suy Sing logo" />
+    </a>
+    <div class="header-search">
+      <input type="text" placeholder="Search for products" />
+      <button class="header-search-btn" data-demo="Search is disabled in this demo.">
+        <span data-icon="search"></span>
+      </button>
+    </div>
+    <div class="header-actions">
+      <a class="header-orders-link" href="orders.html">My Orders</a>
+      <a class="cart-icon-btn" href="cart.html" aria-label="Cart">
+        <span data-icon="cart"></span>
+        <span class="cart-badge" id="headerCartBadge" hidden>0</span>
+      </a>
+      <div class="signup-dropdown" id="signupDropdown">
+        <button class="btn btn-pill" id="signUpDropdownBtn"><span data-icon="idcard"></span> Sign Up <span class="caret">▾</span></button>
+        <div class="signup-dropdown-panel" id="signupDropdownPanel">
+          <p class="sdp-label">Log in as a demo persona</p>
+          <div class="sdp-persona" data-persona="rosa">
+            <span class="avatar">RS</span>
+            <div><strong>Rosa</strong><span>Sari-Sari Starter</span></div>
+          </div>
+          <div class="sdp-persona" data-persona="jun">
+            <span class="avatar">JR</span>
+            <div><strong>Jun</strong><span>Growing Grocery</span></div>
+          </div>
+          <div class="sdp-persona" data-persona="amy">
+            <span class="avatar">AC</span>
+            <div><strong>Amy</strong><span>Loyal Multi-Store</span></div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-pill" onclick="location.href='login.html'"><span data-icon="check"></span> I Already Have an Account</button>
+      <button class="burger" id="openMobileNav">☰</button>
+    </div>
+  </div>
+
+  <nav class="sub-nav">
+    <div class="container">
+      <ul class="main-nav">
+        <li><a href="products.html" data-nav="products">Products <span class="caret">▾</span></a>
+          <div class="dropdown">
+            <a href="products.html">All Categories</a>
+            <a href="promotions.html">Featured Deals</a>
+            <a href="promotions.html">Weekly Mailer</a>
+          </div>
+        </li>
+        <li><a href="promotions.html" data-nav="promotions">Promotions</a></li>
+        <li><a href="retail-academy.html" data-nav="retail-academy">Programs <span class="caret">▾</span></a>
+          <div class="dropdown">
+            <a href="retail-academy.html">Retail Academy</a>
+          </div>
+        </li>
+        <li><a href="about.html" data-nav="about">About Us <span class="caret">▾</span></a>
+          <div class="dropdown">
+            <a href="about.html">Overview</a>
+            <a href="services.html">Services</a>
+            <a href="branches.html">Branches</a>
+          </div>
+        </li>
+        <li><a href="careers.html" data-nav="careers">Careers</a></li>
+        <li><a href="#" data-demo="Opens Suy Sing's official channel — not wired up in this demo.">Suy Sing Channel</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-top">
+    <img src="suysinglogo.png" alt="Suy Sing" style="height:32px" />
+    <button class="burger" id="closeMobileNav">✕</button>
+  </div>
+  <a href="products.html">Products</a>
+  <a href="promotions.html">Promotions</a>
+  <a href="retail-academy.html">Programs</a>
+  <a href="about.html">About Us</a>
+  <a href="careers.html">Careers</a>
+  <a href="faqs.html">FAQs</a>
+  <a href="cart.html">Cart</a>
+  <a href="orders.html">My Orders</a>
+  <p class="mobile-persona-label">Log in as a demo persona</p>
+  <div class="mobile-persona-list">
+    <button class="mobile-persona-btn" data-persona="rosa">Rosa — Sari-Sari Starter</button>
+    <button class="mobile-persona-btn" data-persona="jun">Jun — Growing Grocery</button>
+    <button class="mobile-persona-btn" data-persona="amy">Amy — Loyal Multi-Store</button>
+  </div>
+  <button class="btn btn-outline btn-block" onclick="location.href='login.html'" style="color:var(--navy);border-color:var(--gray-300);margin-top:14px;">I Already Have an Account</button>
+</div>

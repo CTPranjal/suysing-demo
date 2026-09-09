@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Log In | Suy Sing</title>
+<link rel="icon" href="https://suysing.com/favicon.svg" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=5" />
+<!-- CleverTap -->
+<script type="text/javascript">
+var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[]};
+clevertap.account.push({"id": "489-7K5-676Z"});
+clevertap.privacy.push({optOut: false});
+clevertap.privacy.push({useIP: false});
+(function () {
+    var wzrk = document.createElement('script');
+    wzrk.type = 'text/javascript';
+    wzrk.async = true;
+    wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/clevertap.min.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wzrk, s);
+})();
+</script>
+</head>
+<body data-page="login">
+
+<div data-include="partials/agegate.html?v=5"></div>
+<div data-include="partials/header.html?v=5"></div>
+
+<div class="auth-wrap">
+  <div class="auth-visual">
+    <div class="blob"></div>
+    <span style="width:220px;height:220px;color:rgba(255,255,255,0.92);" data-icon="phone"></span>
+  </div>
+  <div class="auth-form-wrap">
+    <div class="auth-form">
+      <img class="logo-top" src="suysinglogo.png" alt="Suy Sing" />
+      <h1>Welcome back</h1>
+      <p>Log in to browse the catalog and place your next order.</p>
+
+      <form id="loginForm" data-demo-form="Login is disabled in this demo — this would take you to your store dashboard.">
+        <div class="form-field"><label>Mobile number or email</label><input type="text" placeholder="09XX XXX XXXX or you@email.com" required /></div>
+        <div class="form-field"><label>Password</label><input type="password" placeholder="Your password" required /></div>
+        <div class="auth-links">
+          <label style="display:flex;align-items:center;gap:6px;font-weight:600;color:var(--gray-700);"><input type="checkbox" /> Remember me</label>
+          <a href="#" data-demo="Password reset isn't wired up in this demo.">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Log In</button>
+      </form>
+
+      <div class="auth-divider">or</div>
+      <button class="btn btn-outline btn-block" style="color:var(--navy);border-color:var(--gray-300);" data-demo="Social login isn't wired up in this demo.">Continue with Google</button>
+
+      <p class="auth-switch">New to Suy Sing? <a href="#" onclick="openHeaderPersonaMenu(); return false;">Try a demo persona</a></p>
+    </div>
+  </div>
+</div>
+
+<div data-include="partials/footer.html?v=5"></div>
+<script src="script.js?v=5"></script>
+<script src="analytics.js?v=5"></script>
+<script>
+document.getElementById('loginForm').addEventListener('submit', () => {
+  ssTrackLoginAndMaybeActivate();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Checkout | Suy Sing</title>
+<link rel="icon" href="https://suysing.com/favicon.svg" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=5" />
+<!-- CleverTap -->
+<script type="text/javascript">
+var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[]};
+clevertap.account.push({"id": "489-7K5-676Z"});
+clevertap.privacy.push({optOut: false});
+clevertap.privacy.push({useIP: false});
+(function () {
+    var wzrk = document.createElement('script');
+    wzrk.type = 'text/javascript';
+    wzrk.async = true;
+    wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/clevertap.min.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wzrk, s);
+})();
+</script>
+</head>
+<body data-page="checkout">
+
+<div data-include="partials/agegate.html?v=5"></div>
+<div data-include="partials/header.html?v=5"></div>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / <a href="cart.html">Cart</a> / Checkout</div>
+    <h1>Checkout</h1>
+    <p>Confirm your order and choose how you'd like to pay.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:760px;">
+    <div id="checkoutEmpty" hidden style="text-align:center;padding:60px 0;">
+      <h3 style="color:var(--navy);margin:0 0 8px;">Nothing to check out</h3>
+      <p style="color:var(--gray-500);margin:0 0 22px;">Your cart is empty — add a few items first.</p>
+      <button class="btn btn-primary" onclick="location.href='products.html'">Browse Products</button>
+    </div>
+
+    <div id="checkoutFull" hidden>
+      <h3 style="color:var(--navy);margin-bottom:14px;">Order Summary</h3>
+      <div class="checkout-items" id="checkoutItems" style="max-height:none;"></div>
+      <div class="checkout-total-row"><span>Total</span><span id="checkoutTotal">₱0</span></div>
+      <div class="checkout-free-delivery" id="checkoutFreeDelivery"></div>
+
+      <p style="font-size:13px;font-weight:700;color:var(--gray-700);margin:0 0 10px;">Payment method</p>
+      <div id="paymentOptions">
+        <div class="payment-option" data-method="Cash on Delivery"><span data-icon="check" style="width:16px;height:16px;color:var(--gray-300);"></span> Cash on Delivery</div>
+        <div class="payment-option" data-method="Bank Transfer"><span data-icon="check" style="width:16px;height:16px;color:var(--gray-300);"></span> Bank Transfer</div>
+        <div class="payment-option" data-method="GCash / E-wallet"><span data-icon="check" style="width:16px;height:16px;color:var(--gray-300);"></span> GCash / E-wallet (5% instant discount)</div>
+      </div>
+
+      <button class="btn btn-primary btn-block" id="placeOrderBtn" style="margin-top:18px;" disabled>Select a payment method</button>
+      <p style="text-align:center;margin-top:14px;"><a href="cart.html" style="color:var(--blue);font-weight:700;font-size:13.5px;">← Back to cart</a></p>
+    </div>
+  </div>
+</section>
+
+<div data-include="partials/footer.html?v=5"></div>
+<script src="script.js?v=5"></script>
+<script src="analytics.js?v=5"></script>
+<script>
+function peso(n) { return '₱' + n.toLocaleString(); }
+
+const cart = ssLoadCart();
+let selectedPayment = null;
+let checkoutStarted = false;
+let orderPlaced = false;
+
+if (!cart.length) {
+  document.getElementById('checkoutEmpty').hidden = false;
+} else {
+  document.getElementById('checkoutFull').hidden = false;
+  document.getElementById('checkoutItems').innerHTML = cart.map((item) => `
+    <div class="checkout-item-row"><span>${item.skuId} · ${item.category}</span><span>${peso(item.price)}</span></div>
+  `).join('');
+  const total = ssCartValue(cart);
+  document.getElementById('checkoutTotal').textContent = peso(total);
+  const gap = Math.max(0, FREE_DELIVERY_THRESHOLD - total);
+  document.getElementById('checkoutFreeDelivery').textContent = gap > 0
+    ? `Add ${peso(gap)} more to qualify for free delivery.`
+    : `This order qualifies for free delivery!`;
+
+  ssTrackCheckoutStarted();
+  checkoutStarted = true;
+
+  document.querySelectorAll('.payment-option').forEach((el) => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.payment-option').forEach((o) => o.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedPayment = el.getAttribute('data-method');
+      ssTrackPaymentMethodUsed(selectedPayment);
+      const btn = document.getElementById('placeOrderBtn');
+      btn.disabled = false;
+      btn.textContent = 'Place Order';
+    });
+  });
+
+  document.getElementById('placeOrderBtn').addEventListener('click', () => {
+    if (!selectedPayment) return;
+    const orderId = ssTrackOrderPlaced(selectedPayment);
+    orderPlaced = true;
+    ssRefreshCartBadge();
+    location.href = 'orders.html?justPlaced=' + orderId;
+  });
+}
+
+// Fire Checkout Abandoned if the shopper leaves this page without ordering.
+window.addEventListener('pagehide', () => {
+  if (checkoutStarted && !orderPlaced) ssTrackCheckoutAbandoned();
+});
+</script>
+</body>
+</html>

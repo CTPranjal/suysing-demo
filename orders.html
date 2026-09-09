@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Orders | Suy Sing</title>
+<link rel="icon" href="https://suysing.com/favicon.svg" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=5" />
+<!-- CleverTap -->
+<script type="text/javascript">
+var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[]};
+clevertap.account.push({"id": "489-7K5-676Z"});
+clevertap.privacy.push({optOut: false});
+clevertap.privacy.push({useIP: false});
+(function () {
+    var wzrk = document.createElement('script');
+    wzrk.type = 'text/javascript';
+    wzrk.async = true;
+    wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/clevertap.min.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wzrk, s);
+})();
+</script>
+</head>
+<body data-page="orders">
+
+<div data-include="partials/agegate.html?v=5"></div>
+<div data-include="partials/header.html?v=5"></div>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / My Orders</div>
+    <h1>My Orders</h1>
+    <p>Track your order status and rate deliveries — this is the full lifecycle, end to end.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:820px;">
+    <div id="justPlacedBanner" hidden style="background:var(--blue-light);border-radius:12px;padding:16px 20px;margin-bottom:26px;font-weight:700;color:var(--royal);">
+      ✅ Order placed! We're simulating delivery — this page updates automatically in a few seconds.
+    </div>
+
+    <div id="ordersEmpty" hidden style="text-align:center;padding:60px 0;">
+      <h3 style="color:var(--navy);margin:0 0 8px;">No orders yet</h3>
+      <p style="color:var(--gray-500);margin:0 0 22px;">Place your first order to see it show up here.</p>
+      <button class="btn btn-primary" onclick="location.href='products.html'">Browse Products</button>
+    </div>
+
+    <div id="ordersList"></div>
+
+    <div style="margin-top:50px;border:1.5px dashed var(--gray-300);border-radius:14px;padding:22px;">
+      <p style="font-weight:800;color:var(--navy);margin:0 0 6px;">Demo tool — fire the rest of the taxonomy</p>
+      <p style="color:var(--gray-500);font-size:13.5px;margin:0 0 14px;">
+        A single linear browsing session can't naturally trigger everything (a second login, an
+        abandoned cart that doesn't conflict with a completed one, a points balance past the
+        redemption threshold, or a monthly rebate batch job). Click below to fire those on this
+        same CleverTap profile so its event timeline shows the full taxonomy.
+      </p>
+      <button class="btn btn-outline" style="color:var(--navy);border-color:var(--gray-300);" id="runRemainingBtn">Simulate remaining events</button>
+      <div id="runRemainingResult" style="margin-top:12px;font-size:13px;color:var(--gray-700);"></div>
+    </div>
+  </div>
+</section>
+
+<div data-include="partials/footer.html?v=5"></div>
+<script src="script.js?v=5"></script>
+<script src="analytics.js?v=5"></script>
+<script>
+function peso(n) { return '₱' + n.toLocaleString(); }
+
+const params = new URLSearchParams(location.search);
+const justPlacedId = params.get('justPlaced');
+if (justPlacedId) document.getElementById('justPlacedBanner').hidden = false;
+
+function statusPill(order) {
+  if (order.status === 'Delivered') {
+    return `<span style="background:#e1f5df;color:#2c7a1f;font-size:11.5px;font-weight:800;padding:4px 10px;border-radius:999px;">Delivered</span>`;
+  }
+  return `<span style="background:#fdeecb;color:var(--orange-dark);font-size:11.5px;font-weight:800;padding:4px 10px;border-radius:999px;">Processing</span>`;
+}
+
+function renderOrders() {
+  const orders = ssLoadOrders();
+  document.getElementById('ordersEmpty').hidden = orders.length > 0;
+  document.getElementById('ordersList').innerHTML = orders.map((o) => `
+    <div style="border:1px solid var(--gray-100);border-radius:14px;padding:20px 22px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <strong style="color:var(--navy);">Order #${o.orderId}</strong>
+        ${statusPill(o)}
+      </div>
+      <p style="color:var(--gray-500);font-size:13.5px;margin:0 0 4px;">
+        ${o.skuCount} item(s) · ${o.categories.join(', ')} · ${o.paymentMethod || 'N/A'}
+      </p>
+      <p style="font-weight:800;color:var(--navy);font-size:16px;margin:0 0 12px;">${peso(o.value)}</p>
+      ${o.status === 'Delivered' && o.csatScore == null ? `
+        <div style="border-top:1px solid var(--gray-100);padding-top:14px;">
+          <p style="font-size:13px;font-weight:700;margin:0 0 8px;">Rate this delivery:</p>
+          <div class="csat-stars" data-order="${o.orderId}" style="justify-content:flex-start;margin:0 0 12px;">
+            <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+          </div>
+          <button class="btn btn-primary" data-submit-for="${o.orderId}" disabled>Submit Feedback</button>
+        </div>
+      ` : o.csatScore != null ? `<p style="font-size:12.5px;color:var(--gray-500);margin:0;">You rated this delivery ${o.csatScore}/5 ★</p>` : ''}
+    </div>
+  `).join('');
+  wireSurveyWidgets();
+}
+
+function wireSurveyWidgets() {
+  document.querySelectorAll('.csat-stars[data-order]').forEach((widget) => {
+    const orderId = widget.getAttribute('data-order');
+    let score = 0;
+    widget.querySelectorAll('span').forEach((star) => {
+      star.addEventListener('click', () => {
+        score = parseInt(star.getAttribute('data-v'), 10);
+        widget.querySelectorAll('span').forEach((s) => {
+          s.classList.toggle('picked', parseInt(s.getAttribute('data-v'), 10) <= score);
+        });
+        const btn = document.querySelector(`[data-submit-for="${orderId}"]`);
+        if (btn) btn.disabled = false;
+      });
+    });
+  });
+  document.querySelectorAll('[data-submit-for]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const orderId = btn.getAttribute('data-submit-for');
+      const widget = document.querySelector(`.csat-stars[data-order="${orderId}"]`);
+      const picked = widget.querySelectorAll('span.picked').length;
+      ssTrackSurveySubmitted(orderId, picked);
+      showToast('Thanks for the feedback! Logged to CleverTap.');
+      renderOrders();
+    });
+  });
+}
+
+renderOrders();
+ssProcessDueDeliveries((orderId) => {
+  showToast('Order #' + orderId + ' delivered!');
+  renderOrders();
+});
+
+document.getElementById('runRemainingBtn').addEventListener('click', () => {
+  const fired = ssRunRemainingLifecycleEvents();
+  document.getElementById('runRemainingResult').textContent = 'Fired: ' + fired.join(', ');
+  showToast('Remaining events logged to CleverTap.');
+  renderOrders();
+});
+</script>
+</body>
+</html>

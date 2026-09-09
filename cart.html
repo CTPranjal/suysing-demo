@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Your Cart | Suy Sing</title>
+<link rel="icon" href="https://suysing.com/favicon.svg" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=5" />
+<!-- CleverTap -->
+<script type="text/javascript">
+var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[]};
+clevertap.account.push({"id": "489-7K5-676Z"});
+clevertap.privacy.push({optOut: false});
+clevertap.privacy.push({useIP: false});
+(function () {
+    var wzrk = document.createElement('script');
+    wzrk.type = 'text/javascript';
+    wzrk.async = true;
+    wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/clevertap.min.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wzrk, s);
+})();
+</script>
+</head>
+<body data-page="cart">
+
+<div data-include="partials/agegate.html?v=5"></div>
+<div data-include="partials/header.html?v=5"></div>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / Cart</div>
+    <h1>Your Cart</h1>
+    <p>Review your items before checking out.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:760px;">
+    <div id="cartEmpty" hidden style="text-align:center;padding:60px 0;">
+      <div class="icon-badge" style="width:64px;height:64px;margin:0 auto 18px;" data-icon="cart"></div>
+      <h3 style="color:var(--navy);margin:0 0 8px;">Your cart is empty</h3>
+      <p style="color:var(--gray-500);margin:0 0 22px;">Browse the catalog and add a few items to get started.</p>
+      <button class="btn btn-primary" onclick="location.href='products.html'">Browse Products</button>
+    </div>
+
+    <div id="cartFull" hidden>
+      <div class="checkout-items" id="cartItems" style="max-height:none;"></div>
+      <div class="checkout-total-row"><span>Subtotal</span><span id="cartTotal">₱0</span></div>
+      <div class="checkout-free-delivery" id="cartFreeDelivery"></div>
+      <button class="btn btn-primary btn-block" onclick="location.href='checkout.html'">Proceed to Checkout</button>
+      <p style="text-align:center;margin-top:14px;"><a href="products.html" style="color:var(--blue);font-weight:700;font-size:13.5px;">← Continue shopping</a></p>
+    </div>
+  </div>
+</section>
+
+<div data-include="partials/footer.html?v=5"></div>
+<script src="script.js?v=5"></script>
+<script src="analytics.js?v=5"></script>
+<script>
+function peso(n) { return '₱' + n.toLocaleString(); }
+
+function renderCartPage() {
+  const cart = ssLoadCart();
+  document.getElementById('cartEmpty').hidden = cart.length > 0;
+  document.getElementById('cartFull').hidden = cart.length === 0;
+  if (!cart.length) return;
+
+  document.getElementById('cartItems').innerHTML = cart.map((item, i) => `
+    <div class="checkout-item-row">
+      <span>${item.skuId} · ${item.category}</span>
+      <span style="display:flex;align-items:center;gap:12px;">
+        ${peso(item.price)}
+        <button class="checkout-close" style="position:static;" onclick="removeCartItem(${i})" aria-label="Remove">✕</button>
+      </span>
+    </div>
+  `).join('');
+  const total = ssCartValue(cart);
+  document.getElementById('cartTotal').textContent = peso(total);
+  const gap = Math.max(0, FREE_DELIVERY_THRESHOLD - total);
+  document.getElementById('cartFreeDelivery').textContent = gap > 0
+    ? `Add ${peso(gap)} more to qualify for free delivery.`
+    : `This order qualifies for free delivery!`;
+}
+
+function removeCartItem(i) {
+  ssRemoveFromCart(i);
+  renderCartPage();
+  ssRefreshCartBadge();
+}
+
+renderCartPage();
+</script>
+</body>
+</html>
