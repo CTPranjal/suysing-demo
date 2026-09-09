@@ -438,6 +438,7 @@ const PERSONAS = {
     name: 'Joyce Reyes',
     email: 'joyce.reyes@suysing.com',
     phone: '+639171234501',
+    dob: '1995-03-14',
     segment: 'Sari-Sari Starter',
     profile: {
       'SuySing Store Name': "Reyes Sari-Sari Store",
@@ -464,6 +465,7 @@ const PERSONAS = {
     name: 'Katrina Dianito',
     email: 'katrina.dianito@suysing.com',
     phone: '+639182345602',
+    dob: '1991-11-02',
     segment: 'Growing Grocery',
     profile: {
       'SuySing Store Name': 'Dianito Mini-Grocery',
@@ -490,6 +492,7 @@ const PERSONAS = {
     name: 'Louise Uy',
     email: 'louise.uy@suysing.com',
     phone: '+639193456703',
+    dob: '1998-07-22',
     segment: 'Loyal Multi-Store',
     profile: {
       'SuySing Store Name': 'Uy Grocery Group',
@@ -525,7 +528,7 @@ function ssLoginAsPersona(key) {
 
   if (window.clevertap) {
     clevertap.onUserLogin.push({
-      Site: { Identity: persona.identity, Name: persona.name, Email: persona.email, Phone: persona.phone },
+      Site: { Identity: persona.identity, Name: persona.name, Email: persona.email, Phone: persona.phone, DOB: new Date(persona.dob) },
     });
   }
 
@@ -537,6 +540,7 @@ function ssLoginAsPersona(key) {
     'SuySing Persona Segment': persona.segment,
     'SuySing Signup Date': signupDate.toISOString().slice(0, 10),
     'SuySing Phone': persona.phone,
+    'SuySing Date of Birth': persona.dob,
     signedUp: true,
     identity: persona.identity,
     displayName: persona.name,
