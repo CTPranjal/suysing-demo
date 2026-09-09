@@ -540,7 +540,7 @@ function ssLoginAsPersona(key) {
     'SuySing Persona Segment': persona.segment,
     'SuySing Signup Date': signupDate.toISOString().slice(0, 10),
     'SuySing Phone': persona.phone,
-    'SuySing Date of Birth': persona.dob,
+    DOB: new Date(persona.dob),
     signedUp: true,
     identity: persona.identity,
     displayName: persona.name,
