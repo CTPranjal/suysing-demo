@@ -6,7 +6,7 @@
 <title>My Orders | Suy Sing</title>
 <link rel="icon" href="https://suysing.com/favicon.svg" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=5" />
+<link rel="stylesheet" href="styles.css?v=12" />
 <!-- CleverTap -->
 <script type="text/javascript">
 var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[]};
@@ -25,8 +25,8 @@ clevertap.privacy.push({useIP: false});
 </head>
 <body data-page="orders">
 
-<div data-include="partials/agegate.html?v=5"></div>
-<div data-include="partials/header.html?v=5"></div>
+<div data-include="partials/agegate.html?v=12"></div>
+<div data-include="partials/header.html?v=12"></div>
 
 <section class="page-hero">
   <div class="container">
@@ -64,9 +64,9 @@ clevertap.privacy.push({useIP: false});
   </div>
 </section>
 
-<div data-include="partials/footer.html?v=5"></div>
-<script src="script.js?v=5"></script>
-<script src="analytics.js?v=5"></script>
+<div data-include="partials/footer.html?v=12"></div>
+<script src="script.js?v=12"></script>
+<script src="analytics.js?v=12"></script>
 <script>
 function peso(n) { return '₱' + n.toLocaleString(); }
 
@@ -124,7 +124,10 @@ function wireSurveyWidgets() {
     });
   });
   document.querySelectorAll('[data-submit-for]').forEach((btn) => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      if (e.target.dataset.submitting) return; // guard against a double-click firing this twice
+      e.target.dataset.submitting = '1';
+      e.target.disabled = true;
       const orderId = btn.getAttribute('data-submit-for');
       const widget = document.querySelector(`.csat-stars[data-order="${orderId}"]`);
       const picked = widget.querySelectorAll('span.picked').length;
@@ -141,11 +144,16 @@ ssProcessDueDeliveries((orderId) => {
   renderOrders();
 });
 
-document.getElementById('runRemainingBtn').addEventListener('click', () => {
+let runningRemaining = false;
+document.getElementById('runRemainingBtn').addEventListener('click', (e) => {
+  if (runningRemaining) return; // guard against a double-click firing this twice
+  runningRemaining = true;
+  e.target.disabled = true;
   const fired = ssRunRemainingLifecycleEvents();
   document.getElementById('runRemainingResult').textContent = 'Fired: ' + fired.join(', ');
   showToast('Remaining events logged to CleverTap.');
   renderOrders();
+  setTimeout(() => { runningRemaining = false; e.target.disabled = false; }, 2000);
 });
 </script>
 </body>

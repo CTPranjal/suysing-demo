@@ -334,13 +334,45 @@ button { font-family: inherit; cursor: pointer; }
   z-index: 1;
 }
 .ad-banner-art.map-art { color: unset; filter: brightness(0) invert(1) opacity(0.85); }
-.ad-banner-img {
+.ad-banner-frame {
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 4.6;
+  overflow: hidden;
+}
+.ad-banner-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 0;
   display: block;
   cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.ad-banner-img.loaded { opacity: 1; }
+.ad-banner-skeleton {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(100deg, var(--gray-100) 30%, var(--gray-50) 45%, var(--gray-100) 60%);
+  background-size: 200% 100%;
+  animation: adBannerShimmer 1.6s ease-in-out infinite;
+  color: var(--gray-500);
+  font-size: 13px;
+  font-weight: 600;
+  transition: opacity 0.3s ease;
+}
+.ad-banner-skeleton.hide { opacity: 0; pointer-events: none; }
+@keyframes adBannerShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 
@@ -1150,7 +1182,7 @@ button { font-family: inherit; cursor: pointer; }
   .burger { display: block; }
   .header-row { height: 74px; }
   .brand img { height: 36px; }
-  .ad-banner, .ad-banner-img { aspect-ratio: 16/9; }
+  .ad-banner, .ad-banner-frame { aspect-ratio: 16/9; }
   .ad-banner { padding: 0 24px; }
   .ad-banner-copy { max-width: 68%; }
   .ad-banner-art { width: 70px; height: 70px; right: 18px; }

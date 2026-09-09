@@ -7,7 +7,7 @@
 <link rel="icon" href="https://suysing.com/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=5" />
+<link rel="stylesheet" href="styles.css?v=12" />
 <!-- CleverTap -->
 <script type="text/javascript">
 var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[]};
@@ -26,34 +26,34 @@ clevertap.privacy.push({useIP: false});
 </head>
 <body data-page="home">
 
-<div data-include="partials/agegate.html?v=5"></div>
-<div data-include="partials/header.html?v=5"></div>
+<div data-include="partials/agegate.html?v=12"></div>
+<div data-include="partials/header.html?v=12"></div>
 
 <!-- Promo carousel -->
 <section class="promo-carousel" id="promoCarousel">
-  <button class="carousel-arrow left" aria-label="Previous slide"><span data-icon="chevronL"></span></button>
-  <button class="carousel-arrow right" aria-label="Next slide"><span data-icon="chevronR"></span></button>
-
   <div class="promo-track">
 
     <div class="promo-slide active" data-nd-topic="Hero Slide 1">
-      <img class="ad-banner-img" src="images/4.jpg" alt="Personalized offer 1" onclick="ndSlideClick(0)" />
+      <div class="ad-banner-frame">
+        <!-- <div class="ad-banner-skeleton"><span>Loading personalized offer…</span></div> -->
+        <!-- <img class="ad-banner-img" alt="Personalized offer 1" onclick="ndSlideClick(0)" /> -->
+      </div>
     </div>
 
     <div class="promo-slide" data-nd-topic="Hero Slide 2">
-      <img class="ad-banner-img" src="images/2.jpeg" alt="Personalized offer 2" onclick="ndSlideClick(1)" />
+      <div class="ad-banner-frame">
+        <!-- <div class="ad-banner-skeleton"><span>Loading personalized offer…</span></div> -->
+        <!-- <img class="ad-banner-img" alt="Personalized offer 2" onclick="ndSlideClick(1)" /> -->
+      </div>
     </div>
 
     <div class="promo-slide" data-nd-topic="Hero Slide 3">
-      <img class="ad-banner-img" src="https://placehold.co/1600x460/0f7a63/ffffff?text=Slide+3" alt="Personalized offer 3" onclick="ndSlideClick(2)" />
+      <div class="ad-banner-frame">
+        <!-- <div class="ad-banner-skeleton"><span>Loading personalized offer…</span></div> -->
+        <!-- <img class="ad-banner-img" alt="Personalized offer 3" onclick="ndSlideClick(2)" /> -->
+      </div>
     </div>
 
-  </div>
-
-  <div class="carousel-dots">
-    <span class="active" data-i="0"></span>
-    <span data-i="1"></span>
-    <span data-i="2"></span>
   </div>
 </section>
 
@@ -354,9 +354,9 @@ clevertap.privacy.push({useIP: false});
   </div>
 </div>
 
-<div data-include="partials/footer.html?v=5"></div>
-<script src="script.js?v=5"></script>
-<script src="analytics.js?v=5"></script>
+<div data-include="partials/footer.html?v=12"></div>
+<script src="script.js?v=12"></script>
+<script src="analytics.js?v=12"></script>
 <script>
 const loyaltyModal = document.getElementById('loyaltyModal');
 document.getElementById('seeRewardsBtn').addEventListener('click', () => {
@@ -379,9 +379,9 @@ document.getElementById('loyaltyRedeemBtn').addEventListener('click', () => {
 // Demo stand-in for a CleverTap Web Native Display campaign firing for the
 // active persona's segment — see the real CT_web_native_display listener
 // and renderNotificationViewed/Clicked calls in analytics.js.
-// document.addEventListener('partials:loaded', () => {
-//   ssSimulateNativeDisplay();
-// });
+document.addEventListener('partials:loaded', () => {
+  ssSimulateNativeDisplay();
+});
 </script>
 </body>
 </html>

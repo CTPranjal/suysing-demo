@@ -71,11 +71,37 @@ function ssSaveOrders(orders) {
   localStorage.setItem(SS_ORDERS_KEY, JSON.stringify(orders));
 }
 
+/* Defense-in-depth against double-firing (double-clicks, a re-render that
+   re-wires a listener, two tabs/timers racing on the same order, etc.):
+   if the exact same event name+payload fires again within 2s, it's almost
+   certainly a duplicate, not a legitimately repeated action — suppress it
+   and log why, rather than sending it to CleverTap twice. */
+const ssRecentEvents = new Map();
+const SS_DEDUP_WINDOW_MS = 2000;
+
+/* Every call is recorded here (name, payload, timestamp, and a short call
+   stack) so a real duplicate can be diagnosed precisely instead of guessed
+   at — run `ssDebugEventLog` in devtools any time to inspect it. */
+window.ssDebugEventLog = window.ssDebugEventLog || [];
+
 function ssTrackEvent(name, props) {
+  const key = name + '|' + JSON.stringify(props || {});
+  const now = Date.now();
+  const stack = (new Error().stack || '').split('\n').slice(2, 5).join(' <- ').trim();
+  const lastSeen = ssRecentEvents.get(key);
+
+  window.ssDebugEventLog.push({ name, props, at: now, stack, suppressed: !!(lastSeen && now - lastSeen < SS_DEDUP_WINDOW_MS) });
+
+  if (lastSeen && now - lastSeen < SS_DEDUP_WINDOW_MS) {
+    console.warn('[CleverTap event] SUPPRESSED duplicate (fired again ' + (now - lastSeen) + 'ms later):', name, props, '\ncalled from:', stack);
+    return;
+  }
+  ssRecentEvents.set(key, now);
+
   if (window.clevertap) {
     clevertap.event.push(name, props || {});
   }
-  console.debug('[CleverTap event]', name, props);
+  console.debug('[CleverTap event]', name, props, '\ncalled from:', stack);
 }
 
 /* ---------- Site visit (fires on every page) ---------- */
@@ -250,6 +276,24 @@ function ssTrackOrderPlaced(paymentMethod) {
     csatScore: null,
   });
   ssSaveOrders(orders);
+
+  // CleverTap's built-in "Charged" event for revenue/transaction reporting —
+  // separate from the custom "SuySing Order Placed" event above, which
+  // carries our own funnel-specific properties (is_first_order, etc.) that
+  // Charged doesn't have a slot for.
+  // https://developer.clevertap.com/docs/web-user-events#recording-the-transaction-amount
+  const itemCounts = new Map();
+  cart.forEach((item) => {
+    const existing = itemCounts.get(item.skuId);
+    if (existing) existing.Quantity += 1;
+    else itemCounts.set(item.skuId, { Category: item.category, 'SKU ID': item.skuId, Quantity: 1 });
+  });
+  ssTrackEvent('Charged', {
+    Amount: cartValue,
+    'Payment mode': paymentMethod,
+    'Charged ID': orderId,
+    Items: Array.from(itemCounts.values()),
+  });
 
   ssSaveCart([]);
   return orderId;
@@ -516,30 +560,34 @@ document.addEventListener('CT_web_native_display', function (event) {
   if (!match) return;
   const index = parseInt(match[1], 10) - 1;
   const slide = document.querySelector(`.promo-slide[data-nd-topic="${data.kv.topic}"]`);
-  const img = slide && slide.querySelector('img');
+  const frame = slide && slide.querySelector('.ad-banner-frame');
+  const img = frame && frame.querySelector('.ad-banner-img');
+  const skeleton = frame && frame.querySelector('.ad-banner-skeleton');
   if (!img || !data.kv.image) return;
 
   ndSlideData[index] = data;
 
-  // Seamless swap: fade the slide's current image out, swap the src only
-  // once the new one has actually loaded, then fade back in. A slide that
-  // isn't the currently-visible one just gets its src updated silently —
-  // there's nothing on screen to flash.
-  const isVisible = slide.classList.contains('active');
-  const applySrc = () => {
-    img.src = data.kv.image;
-    if (isVisible) img.style.opacity = '1';
+  // No default/fallback creative on this site by design — each slide shows
+  // a loading skeleton until its first real campaign payload arrives, then
+  // fades it in. If a *second* payload arrives later (e.g. switching demo
+  // personas after content already loaded), crossfade to it instead of
+  // flashing back to the skeleton.
+  const alreadyLoaded = img.classList.contains('loaded');
+  const preload = new Image();
+  preload.onload = () => {
+    if (alreadyLoaded) {
+      img.style.opacity = '0';
+      setTimeout(() => {
+        img.src = data.kv.image;
+        img.style.opacity = '1';
+      }, 300);
+    } else {
+      img.src = data.kv.image;
+      img.classList.add('loaded');
+      if (skeleton) skeleton.classList.add('hide');
+    }
   };
-  if (isVisible) {
-    img.style.transition = 'opacity 0.25s ease';
-    img.style.opacity = '0';
-    const preload = new Image();
-    preload.onload = () => setTimeout(applySrc, 250);
-    preload.onerror = () => { img.style.opacity = '1'; };
-    preload.src = data.kv.image;
-  } else {
-    applySrc();
-  }
+  preload.src = data.kv.image;
 
   // Real SDK methods, not stub-queue arrays like event.push — they only
   // exist once clevertap.min.js has actually loaded from the CDN, so a

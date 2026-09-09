@@ -6,7 +6,7 @@
 <title>Checkout | Suy Sing</title>
 <link rel="icon" href="https://suysing.com/favicon.svg" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=5" />
+<link rel="stylesheet" href="styles.css?v=12" />
 <!-- CleverTap -->
 <script type="text/javascript">
 var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[]};
@@ -25,8 +25,8 @@ clevertap.privacy.push({useIP: false});
 </head>
 <body data-page="checkout">
 
-<div data-include="partials/agegate.html?v=5"></div>
-<div data-include="partials/header.html?v=5"></div>
+<div data-include="partials/agegate.html?v=12"></div>
+<div data-include="partials/header.html?v=12"></div>
 
 <section class="page-hero">
   <div class="container">
@@ -63,9 +63,9 @@ clevertap.privacy.push({useIP: false});
   </div>
 </section>
 
-<div data-include="partials/footer.html?v=5"></div>
-<script src="script.js?v=5"></script>
-<script src="analytics.js?v=5"></script>
+<div data-include="partials/footer.html?v=12"></div>
+<script src="script.js?v=12"></script>
+<script src="analytics.js?v=12"></script>
 <script>
 function peso(n) { return '₱' + n.toLocaleString(); }
 
@@ -103,8 +103,9 @@ if (!cart.length) {
     });
   });
 
-  document.getElementById('placeOrderBtn').addEventListener('click', () => {
-    if (!selectedPayment) return;
+  document.getElementById('placeOrderBtn').addEventListener('click', (e) => {
+    if (!selectedPayment || orderPlaced) return;
+    e.target.disabled = true; // guard against a double-click firing this twice
     const orderId = ssTrackOrderPlaced(selectedPayment);
     orderPlaced = true;
     ssRefreshCartBadge();
